@@ -1,0 +1,51 @@
+
+  <div *ngIf="flightList.length > 0;then content; else other_content"></div>
+
+  <ng-template #other_content>
+    <span>Manal moviment has not added records yet.</span>
+</ng-template>
+<ng-template #content>
+
+  <div *ngIf="feedback.length" class="alert alert-{{feedback.type}}">{{ feedback.message }}</div>
+  <table mat-table #table [dataSource]="flightList">
+    <ng-container matColumnDef="month">
+      <mat-header-cell *matHeaderCellDef> month </mat-header-cell>
+      <mat-cell *matCellDef="let item"> {{item.id.month}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="year">
+      <mat-header-cell *matHeaderCellDef> year </mat-header-cell>
+      <mat-cell *matCellDef="let item"> {{item.id.year}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="release">
+      <mat-header-cell *matHeaderCellDef> release </mat-header-cell>
+      <mat-cell *matCellDef="let item"> {{item.id.release}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="idProduct">
+      <mat-header-cell *matHeaderCellDef> idProduct </mat-header-cell>
+      <mat-cell *matCellDef="let item"> {{item.id.idProduct}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="idCosif">
+      <mat-header-cell *matHeaderCellDef> idCosif </mat-header-cell>
+      <mat-cell *matCellDef="let item"> {{item.id.idCosif}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef> description </mat-header-cell>
+      <mat-cell *matCellDef="let item"> {{item.description}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="dtMovement">
+      <mat-header-cell *matHeaderCellDef> dtMovement </mat-header-cell>
+      <mat-cell *matCellDef="let item"> {{item.dtMovement | date}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="user">
+      <mat-header-cell *matHeaderCellDef> user </mat-header-cell>
+      <mat-cell *matCellDef="let item"> {{item.user}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="amount">
+      <mat-header-cell *matHeaderCellDef> amount </mat-header-cell>
+      <mat-cell *matCellDef="let item"> {{item.amount}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </table>
+  </ng-template>

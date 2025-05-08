@@ -1,0 +1,5 @@
+insert into PRODUTO (COD_PRODUTO, DES_PRODUTO, STA_STATUS) values (1, 'Produto 1', 'A')
+insert into PRODUTO (COD_PRODUTO, DES_PRODUTO, STA_STATUS) values (2, 'Produto 2', 'A')
+insert into PRODUTO_COSIF ( COD_PRODUTO, COD_COSIF, COD_CLASSIFICACAO, STA_STATUS) values (1, 1,  'Clas 1', 'A')
+insert into PRODUTO_COSIF ( COD_PRODUTO, COD_COSIF, COD_CLASSIFICACAO, STA_STATUS) values (1, 2,  'Clas 2', 'A')
+insert into PRODUTO_COSIF ( COD_PRODUTO, COD_COSIF, COD_CLASSIFICACAO, STA_STATUS) values (2, 3,  'Clas 3', 'A')

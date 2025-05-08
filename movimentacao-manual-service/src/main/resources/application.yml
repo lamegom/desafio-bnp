@@ -1,0 +1,24 @@
+server:
+  port: 8091
+
+logging:
+  level:
+    com.desafio.hexagonal: info
+
+spring:
+  h2.console.enabled: true
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver: org.h2.Driver
+    username: test
+    password: test
+  jpa:
+    show-sql: true
+    hibernate:
+       ddl-auto: update
+       defer-datasource-initialization: true 
+    sql:
+      init:
+        mode: always
+
+  

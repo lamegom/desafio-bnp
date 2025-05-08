@@ -1,0 +1,49 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  application:
+    name: api-gateway
+  output.ansi.enabled: ALWAYS
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+        add-to-simple-url-handler-mapping: true
+      routes:
+        - id: movimentaoca-manual-service
+          uri: http://localhost:8091
+          predicates:
+          - Path=/movement-service/**
+          filters:
+          - RewritePath=/movement-service/(?<path>.*), /$\{path}
+          - name: CircuitBreaker
+            args:
+              name: myCircuitBreaker
+              fallbackUri: forward:/fallback
+          - RewritePath=/movement-service/v1/moves, /fallback
+          
+        - id: produto-service
+          uri: http://localhost:8092
+          predicates:
+          - Path=/product-service/**
+          filters:
+          - RewritePath=/product-service/(?<path>.*), /$\{path}
+          - name: CircuitBreaker
+            args:
+              name: myCircuitBreaker
+              fallbackUri: forward:/fallback
+          - RewritePath=/product-service/(?<path>.*), /fallback
+  main:
+    web-application-type: REACTIVE
+
+
+logging:
+  level:
+    io.github.resilience4j: info

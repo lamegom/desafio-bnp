@@ -1,0 +1,10 @@
+server:
+  port: 8092
+
+logging:
+  level:
+    com.desafio.hexagonal: info
+
+spring:
+  jpa:
+    defer-datasource-initialization: true
