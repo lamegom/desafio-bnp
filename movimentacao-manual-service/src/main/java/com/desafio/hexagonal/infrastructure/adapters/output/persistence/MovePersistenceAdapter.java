@@ -78,6 +78,14 @@ public class MovePersistenceAdapter implements MoveOutputPort {
     	query.setParameter("year", year);
 
     	List<ManualMoveEntity> moveList = query.getResultList();
+    	
+    	for(ManualMoveEntity m : moveList) {
+			String cosif = produtoCosifById(m.getId().getIdProduct() , m.getId().getIdCosif());
+			m.setCosif(cosif);
+			String prod = produtoById(m.getId().getIdProduct());
+			m.setProduto(prod);
+    	}
+    	
     	return moveList.stream()
 	    	.map(moveEntity -> moveMapper.toManualMove(moveEntity))
 	    	.collect(Collectors.toList());
