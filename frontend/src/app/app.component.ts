@@ -20,8 +20,8 @@ export class AppComponent {
       .pipe(delay(1))
       .subscribe((res) => {
 
-          this.sidenav.mode = 'side';
-          this.sidenav.open();
+          //this.sidenav.mode = 'side';
+          //this.sidenav.open();
         
       });
   }

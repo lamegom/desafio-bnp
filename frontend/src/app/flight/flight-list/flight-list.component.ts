@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
   ]
 })
 export class FlightListComponent implements  OnDestroy  {
-  displayedColumns = ['month', 'year', 'release', 'product', 'cosif', 'description', 'dtMovement', 'user', 'amount'];
+  displayedColumns = ['mês', 'ano', 'código produto', 'descrição produto', 'NR lançamento', 'descrição',  'valor'];
   selectedFlight!: Move;
   feedback: any = {};
   receivedData: any;

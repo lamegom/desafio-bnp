@@ -2,46 +2,38 @@
   <div *ngIf="flightList.length > 0;then content; else other_content"></div>
 
   <ng-template #other_content>
-    <span>Manal moviment has not added records yet.</span>
+    <span class="no-records" style="align-items: center;">Manal moviment has not added records yet.</span>
 </ng-template>
 <ng-template #content>
 
   <div *ngIf="feedback.length" class="alert alert-{{feedback.type}}">{{ feedback.message }}</div>
   <table mat-table #table [dataSource]="flightList">
-    <ng-container matColumnDef="month">
-      <mat-header-cell *matHeaderCellDef> month </mat-header-cell>
+    <ng-container matColumnDef="mês">
+      <mat-header-cell *matHeaderCellDef style="background: lightgray;  font-weight: bolder;"> mês </mat-header-cell>
       <mat-cell *matCellDef="let item"> {{item.id.month}} </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="year">
-      <mat-header-cell *matHeaderCellDef> year </mat-header-cell>
+    <ng-container matColumnDef="ano">
+      <mat-header-cell *matHeaderCellDef style="background: lightgray;  font-weight: bolder;"> ano </mat-header-cell>
       <mat-cell *matCellDef="let item"> {{item.id.year}} </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="release">
-      <mat-header-cell *matHeaderCellDef> release </mat-header-cell>
-      <mat-cell *matCellDef="let item"> {{item.id.release}} </mat-cell>
+    <ng-container matColumnDef="código produto">
+      <mat-header-cell *matHeaderCellDef style="background: lightgray; font-weight: bolder;"> código produto </mat-header-cell>
+      <mat-cell *matCellDef="let item"> {{item.id.idProduct}} </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="product">
-      <mat-header-cell *matHeaderCellDef> product </mat-header-cell>
+    <ng-container matColumnDef="descrição produto">
+      <mat-header-cell *matHeaderCellDef style="background: lightgray;  font-weight: bolder;"> descrição produto </mat-header-cell>
       <mat-cell *matCellDef="let item"> {{item.produto}} </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="cosif">
-      <mat-header-cell *matHeaderCellDef> cosif </mat-header-cell>
-      <mat-cell *matCellDef="let item"> {{item.cosif}} </mat-cell>
+    <ng-container matColumnDef="NR lançamento">
+      <mat-header-cell *matHeaderCellDef style="background: lightgray;  font-weight: bolder;"> NR lançamento </mat-header-cell>
+      <mat-cell *matCellDef="let item"> {{item.id.release}} </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="description">
-      <mat-header-cell *matHeaderCellDef> description </mat-header-cell>
+    <ng-container matColumnDef="descrição">
+      <mat-header-cell *matHeaderCellDef style="background: lightgray;  font-weight: bolder;"> descrição </mat-header-cell>
       <mat-cell *matCellDef="let item"> {{item.description}} </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="dtMovement">
-      <mat-header-cell *matHeaderCellDef> dtMovement </mat-header-cell>
-      <mat-cell *matCellDef="let item"> {{item.dtMovement | date}} </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="user">
-      <mat-header-cell *matHeaderCellDef> user </mat-header-cell>
-      <mat-cell *matCellDef="let item"> {{item.user}} </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="amount">
-      <mat-header-cell *matHeaderCellDef> amount </mat-header-cell>
+    <ng-container matColumnDef="valor">
+      <mat-header-cell *matHeaderCellDef style="background: lightgray;  font-weight: bolder;"> valor </mat-header-cell>
       <mat-cell *matCellDef="let item"> {{item.amount}} </mat-cell>
     </ng-container>
 

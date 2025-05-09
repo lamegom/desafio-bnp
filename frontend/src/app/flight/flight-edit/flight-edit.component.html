@@ -1,36 +1,43 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
-  </ol>
-</nav>
-<h2>Detail</h2>
+
+<h2>Movimentos Manuais</h2>
 <div style="min-width: 850px;">
 <div >{{feedback.type}} - {{ feedback.message }}</div>
-<form *ngIf="move" #editForm="ngForm" (ngSubmit)="save()">
+<form *ngIf="move" #editForm2="ngForm" (ngSubmit)="save()" [formGroup]="editForm">
 
   <div style="display: flex; gap: 10px;">
 
     <mat-form-field style=" width: 50%;">
-    <mat-label>Month</mat-label>
-    <input matInput [(ngModel)]="move.id.month" id="month" name="month" >
+    <mat-label>month</mat-label>
+    <input matInput [(ngModel)]="move.id.month" id="month" name="month"  formControlName="month" maxlength="2">
+     <div *ngIf="editForm.get('month')?.invalid && (editForm.get('month')?.dirty || editForm.get('month')?.touched)">
+      <div *ngIf="editForm.get('month')?.errors?.['invalidMonth']">
+        Please select a valid month.
+      </div>
+      <div *ngIf="editForm.get('month')?.errors?.['yearOutOfRange']">
+         Year must be between 1900 and 2099.
+      </div>
+      </div>
   </mat-form-field>
 
   <mat-form-field style=" width: 50%;" >
     <mat-label>year</mat-label>
-    <input matInput [(ngModel)]="move.id.year" id="year" name="year" >
+    <input matInput [(ngModel)]="move.id.year" id="year" name="year"  formControlName="year">
+      <div *ngIf="editForm.get('year')?.invalid && (editForm.get('year')?.dirty || editForm.get('year')?.touched)">
+        <div *ngIf="editForm.get('year')?.errors?.['invalidYear']">
+          Please enter a valid year.
+        </div>
+        <div *ngIf="editForm.get('year')?.errors?.['yearOutOfRange']">
+          Year must be between 1900 and 2099.
+        </div>
+      </div>
   </mat-form-field>
 </div>
-<!-- <div style="display: flex; gap: 10px;">
-  <mat-form-field >
-    <mat-label>release</mat-label>
-    <input matInput [(ngModel)]="move.id.release" id="release" name="release" >
-  </mat-form-field>
-</div> -->
+
 <div style="display: flex; gap: 10px;">
 <div style="width: 50%;">
   <div class="form-group">
-    <label for="produto">Product : </label>
-      <select class="mydropdown" id="produto" [disabled]="!active" [(ngModel)]="move.id.idProduct" (change)="onChangeProduct($event)" [ngModelOptions]="{standalone: true}">
+    <mat-label for="produto">product : </mat-label>
+      <select class="mydropdown" id="produto" [(ngModel)]="move.id.idProduct" (change)="onChangeProduct($event)" formControlName="produto" >
         <option value="" disabled selected>Select Product</option>
         <option *ngFor="let produto of select" [value]="produto.produto.id">{{ produto.produto.descricao }}</option>
       </select>
@@ -40,8 +47,8 @@
 <div style="width: 50%;">
   
   <div class="form-group">
-    <label for="cosif">Cosif : </label>
-    <select class="mydropdown" id="cosif" [disabled]="!active" [(ngModel)]="move.id.idCosif" [ngModelOptions]="{standalone: true}">
+    <mat-label for="cosif">cosif : </mat-label>
+    <select class="mydropdown" id="cosif" [(ngModel)]="move.id.idCosif" formControlName="cosif" >
       <option value="" disabled selected>Select Cosif</option>
       <option *ngFor="let cosif of cosif" [value]="cosif.pk.idCosif">{{ cosif.pk.idCosif}} - {{cosif.classifier }}</option>
     </select>
@@ -62,12 +69,12 @@
 
 <mat-form-field style="width: 50%;">
   <mat-label>amount</mat-label>
-  <input matInput [(ngModel)]="move.amount" [disabled]="!active" id="amount" name="amount">
+  <input matInput  formControlName="amount" currencyMask  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" [(ngModel)]="move.amount" [disabled]="active" id="amount" name="amount">
 </mat-form-field>
 
   <mat-form-field style="width: 50%;">
     <mat-label>description</mat-label>
-    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+    <textarea matInput  formControlName="description" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
     cdkAutosizeMinRows="1"
     cdkAutosizeMaxRows="5"
     [disabled]="!active"
@@ -88,20 +95,30 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 </div> -->
-  <div class="button-row" role="group" *ngIf="active">
-    <button type="submit" mat-raised-button color="primary" [disabled]="!editForm.form.valid">Save</button>
+<!--  <div class="button-row" role="group" *ngIf="active">
+    <button type="submit" mat-raised-button color="primary" [disabled]="!editForm.valid">Save</button>
     <button type="button" mat-button color="accent" (click)="disableField()">Cancel</button>
     <p></p>
     <p></p>
-  </div>
+  </div> -->
 
 </form>
 
 </div>
-<form #f="ngForm">
-<div style="width: 100px;">
-  <button type="button" (click)="search({month: move.id.month, year: move.id.year})" mat-mini-fab color="primary"><mat-icon>search</mat-icon></button>
-  <a (click)="enableField()" mat-mini-fab color="accent"><mat-icon>add</mat-icon></a>
+<form #f="ngForm" style="align-items: center;">
+<div style="
+      width: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    ">
+    <button mat-raised-button color="primary" (click)="onReset(form)" >Limpar</button>
+    <button mat-raised-button color="primary" (click)="search({month: move.id.month, year: move.id.year})" >Buscar</button>
+  <button mat-raised-button color="primary"  (click)="enableField()" >Novo</button>
+    <button type="submit" mat-raised-button color="primary" (click)="save()" >Incluir</button>
+    <button type="button" mat-button color="accent" (click)="disableField()">Cancel</button>
+    <p></p>
+    <p></p>
 </div>
 </form>
 <p></p>

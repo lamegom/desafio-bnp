@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { FlightListComponent } from './flight-list/flight-list.component';
 import { FlightEditComponent } from './flight-edit/flight-edit.component';
@@ -14,6 +14,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ProductService } from '../product/product.service';
+import { CurrencyMaskModule } from "ng2-currency-mask";
 
 @NgModule({
   imports: [
@@ -26,7 +27,9 @@ import { ProductService } from '../product/product.service';
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    ReactiveFormsModule,
+    CurrencyMaskModule
   ],
   declarations: [
     FlightListComponent,

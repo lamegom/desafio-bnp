@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild  } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormGroup, FormBuilder, NgForm, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { FlightService } from '../flight.service';
@@ -8,7 +8,8 @@ import { Move, MoveID } from '../move';
 import { of } from 'rxjs';
 import { MoveFilter } from '../flight-filter';
 import { ProductService } from 'src/app/product/product.service';
-
+import { yearValidator } from 'src/app/validate';
+import { monthValidator } from 'src/app//month-validator';
 
 @Component({
   selector: 'app-flight-edit',
@@ -17,16 +18,17 @@ import { ProductService } from 'src/app/product/product.service';
     // todo: figure out how to make width dynamic
     'form { display: flex; flex-direction: column; min-width: 500px; }',
     'form > * { width: 100% }'
-  ]
+  ],
+
 })
 export class FlightEditComponent implements OnInit {
   id!: string;
   move!: Move
   feedback: any = {};
   active: boolean = false;
-cosif: { pk: { id: string; idCosif: string; };
-classifier: string, 
-status: string
+  cosif: { pk: { id: string; idCosif: string; };
+  classifier: string, 
+  status: string
         }[] = [];
 
   select!: { produto: {
@@ -37,15 +39,31 @@ status: string
                         id: string, 
                         descricao: string
                       }[]; 
-}[];
-@ViewChild('editForm') 
-form!: NgForm;
+  }[];
+  @ViewChild('editForm2') 
+  form!: NgForm;
+  validMonths = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  editForm = this.fb.group({
+    year: ['', [Validators.required, yearValidator(1900, 2099)]],
+    month: ['', [Validators.required, monthValidator(this.validMonths),
+      Validators.pattern(/^([1-9]|1[0-2])$/), // Matches 01 to 12
+      Validators.minLength(1),
+      Validators.maxLength(2),
+      //Validators.pattern(/^\d{2}$/) // Matches exactly two digits
+    ]],
+    amount: new FormControl({value: '', disabled: true}, Validators.required),
+    description: new FormControl({value: '', disabled: true}, Validators.required),
+    produto: new FormControl({value: '', disabled: true}, Validators.required),
+    cosif: new FormControl({value: '', disabled: true}, Validators.required),
+  });
+
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private flightService: FlightService,
-  private productService: ProductService) {
+    private productService: ProductService,
+    private fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -76,12 +94,13 @@ form!: NgForm;
         }
       );
 
-
   }
+ 
 
   onSubmit(form: NgForm) {
     // Handle form submission
-    console.log(form.value);
+    console.log(this.editForm.value);
+    // Submit logic for reactive forms can be handled here if needed
     this.onReset(form); // Optionally reset after submission
   }
 
@@ -92,6 +111,10 @@ form!: NgForm;
   }
 
   save() {
+    if(this.editForm.invalid) {
+      this.feedback = {type: 'warning', message: 'Form is invalid!'};
+      return;
+    }
     this.flightService.save(this.move).subscribe(
       move => {
         this.move = move;
@@ -130,6 +153,7 @@ form!: NgForm;
   }
 
   enableField(): void {
+    this.editForm.enable()
     this.active = true
    
    }
@@ -139,7 +163,7 @@ form!: NgForm;
    }
 
   disableField(): void {
-
+  this.editForm.disable()
     this.active = false;
 
   }
