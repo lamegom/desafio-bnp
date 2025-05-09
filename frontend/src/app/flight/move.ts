@@ -12,4 +12,6 @@
     dtMovement: number;
     user: string;
     amount: string;
+    cosif: string;
+    produto: string
   }

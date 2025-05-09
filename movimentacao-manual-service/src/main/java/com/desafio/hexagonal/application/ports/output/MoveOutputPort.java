@@ -13,5 +13,9 @@ public interface MoveOutputPort {
     Long getRelease(Long month, Long year);
 
 	List<ManualMove> getMoveListByYearAndMonth(Long year, Long month);
+
+	String produtoCosifById(Long idProduto, Long idCosif);
+
+	String produtoById(Long idProduto);
     
 }

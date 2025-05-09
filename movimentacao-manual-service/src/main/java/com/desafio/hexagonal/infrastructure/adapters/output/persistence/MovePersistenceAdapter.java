@@ -8,10 +8,15 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.desafio.hexagonal.application.ports.output.MoveOutputPort;
 import com.desafio.hexagonal.domain.model.ManualMove;
+import com.desafio.hexagonal.infrastructure.adapters.output.persistence.client.ProdutoApi;
 import com.desafio.hexagonal.infrastructure.adapters.output.persistence.entity.ManualMoveEntity;
 import com.desafio.hexagonal.infrastructure.adapters.output.persistence.mapper.MoveMapper;
 
@@ -24,6 +29,8 @@ public class MovePersistenceAdapter implements MoveOutputPort {
     
     @PersistenceContext
     private EntityManager em;
+    @Autowired
+    private ProdutoApi produtoApi;
 
     @Transactional
 	@Override
@@ -38,10 +45,19 @@ public class MovePersistenceAdapter implements MoveOutputPort {
 	public List<ManualMove> getAllMoves() {
     	TypedQuery<ManualMoveEntity> query = em.createQuery("SELECT u FROM ManualMoveEntity u", ManualMoveEntity.class);
     	List<ManualMoveEntity> moveList = query.getResultList();
+    	
+    	for(ManualMoveEntity m : moveList) {
+			String cosif = produtoCosifById(m.getId().getIdProduct() , m.getId().getIdCosif());
+			m.setCosif(cosif);
+			String prod = produtoById(m.getId().getIdProduct());
+			m.setProduto(prod);
+    	}
+    	
     	return moveList.stream()
 	    	.map(moveEntity -> moveMapper.toManualMove(moveEntity))
 	    	.collect(Collectors.toList());
 	}
+
 
 	@Override
 	public Long getRelease(Long month, Long year) {
@@ -67,5 +83,18 @@ public class MovePersistenceAdapter implements MoveOutputPort {
 	    	.collect(Collectors.toList());
 
 	}
+
+	@Override
+	public String produtoCosifById(Long idProduto, Long idCosif) {
+		return produtoApi.produtoCosifById(idProduto, idCosif).getBody();
+
+	}
+	
+	@Override
+	public String produtoById(Long idProduto) {
+		return produtoApi.produtosById(idProduto).getBody();
+
+	}
+	
     
 }

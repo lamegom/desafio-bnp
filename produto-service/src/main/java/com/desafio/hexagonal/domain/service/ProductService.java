@@ -25,5 +25,15 @@ public class ProductService implements GetProductsUseCase{
 		return productOutputPort.findAllProductCosifByProductId(id);
 	}
 
+	@Override
+	public String findProductCosifByProductIdAndCosifId(Long idProduto, Long idCosif) {
+		return productOutputPort.findProductCosifByProductIdAndCosifId( idProduto,  idCosif);
+	}
+
+	@Override
+	public String findProductByProductIdAndCosifId(Long idProduto) {
+		return productOutputPort.findProductByProductIdAndCosifId( idProduto);
+	}
+
     
 }

@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.desafio.hexagonal.application.ports.input.GetProductsUseCase;
@@ -85,6 +86,20 @@ public class ProductRestAdapter {
         List<ProductCosifResponse> allCosifs = allProducts.stream().map(productCosif -> mapper.map(productCosif, ProductCosifResponse.class))
         										.collect(Collectors.toList());
         return new ResponseEntity<>(allCosifs, HttpStatus.OK);
+    }
+    
+    @GetMapping("/cosif")
+    public ResponseEntity<String> getProductsCosif(@RequestParam("idProduto") Long idProduto, @RequestParam("idCosif") Long idCosif){
+        String cosif = getProductsUseCase.findProductCosifByProductIdAndCosifId(idProduto, idCosif);
+
+        return new ResponseEntity<String>(cosif, HttpStatus.OK);
+    }
+    
+    @GetMapping("/produto")
+    public ResponseEntity<String> getProducts(@RequestParam("idProduto") Long idProduto){
+        String cosif = getProductsUseCase.findProductByProductIdAndCosifId(idProduto);
+
+        return new ResponseEntity<String>(cosif, HttpStatus.OK);
     }
 
 

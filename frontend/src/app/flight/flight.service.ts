@@ -37,7 +37,9 @@ export class FlightService {
           description: move.description,
           dtMovement: move.dtMovement,
           user: move.user,
-          amount: move.amount
+          amount: move.amount,
+          cosif:move.cosif,
+          produto: move.produto
         } as Move));
 
       },

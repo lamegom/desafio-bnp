@@ -27,5 +27,9 @@ public class ManualMove {
     private String user;
     
     private BigDecimal amount;
+    
+	private String cosif;
+
+	private String produto;
 
 }

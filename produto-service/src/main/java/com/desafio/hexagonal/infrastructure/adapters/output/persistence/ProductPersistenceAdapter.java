@@ -42,5 +42,20 @@ public class ProductPersistenceAdapter implements ProductOutputPort {
 		ProductEntity product = query.getResultList().stream().findFirst().orElse(null);
     	return productMapper.toProductCosifList(product);
 	}
+
+	@Override
+	public String findProductCosifByProductIdAndCosifId(Long idProduto, Long idCosif) {
+		TypedQuery<String> query = em.createQuery("SELECT u.classifier FROM ProductCosifEntity u WHERE u.pk.id = :idProduto and u.pk.IdCosif = :idCosif", String.class);
+		query.setParameter("idProduto", idProduto);
+		query.setParameter("idCosif", idCosif);
+		return query.getSingleResult();
+	}
+
+	@Override
+	public String findProductByProductIdAndCosifId(Long idProduto) {
+		TypedQuery<String> query = em.createQuery("SELECT u.description FROM ProductEntity u WHERE u.id = :idProduto", String.class);
+		query.setParameter("idProduto", idProduto);
+		return query.getSingleResult();
+	}
     
 }

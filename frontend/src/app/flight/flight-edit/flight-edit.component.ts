@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild  } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { FlightService } from '../flight.service';
@@ -37,6 +38,8 @@ status: string
                         descricao: string
                       }[]; 
 }[];
+@ViewChild('editForm') 
+form!: NgForm;
 
   constructor(
     private route: ActivatedRoute,
@@ -76,12 +79,25 @@ status: string
 
   }
 
+  onSubmit(form: NgForm) {
+    // Handle form submission
+    console.log(form.value);
+    this.onReset(form); // Optionally reset after submission
+  }
+
+  onReset(form: NgForm) {
+    this.move.id.idProduct = '';
+    this.move.id.idCosif = '';
+    form.resetForm(); // Clears values and resets state
+  }
+
   save() {
     this.flightService.save(this.move).subscribe(
       move => {
         this.move = move;
         this.feedback = {type: 'success', message: 'Save was successful!'};
         this.search({month:'', year: ""} as MoveFilter);
+        this.onSubmit(this.form);
       },
       err => {
         this.feedback = {type: 'warning', message: 'Error saving : ' }

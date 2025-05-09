@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,5 +44,10 @@ public class ManualMoveEntity implements Serializable {
     
 	@Column(name = "VAL_VALOR")
     private BigDecimal amount;
+	
+	@Transient
+	private String cosif;
 
+	@Transient
+	private String produto;
 }

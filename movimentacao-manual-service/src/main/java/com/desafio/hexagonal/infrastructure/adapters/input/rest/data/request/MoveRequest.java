@@ -28,5 +28,9 @@ public class MoveRequest {
     
     private BigDecimal amount;
     
+	private String cosif;
+
+	private String produto;
+    
 }
 

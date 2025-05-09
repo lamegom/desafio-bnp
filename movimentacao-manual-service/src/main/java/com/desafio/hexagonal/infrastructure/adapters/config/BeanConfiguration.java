@@ -34,7 +34,13 @@ public class BeanConfiguration {
         return new MoveService(movePersistenceAdapter);
     }
     
-
+//    @Bean
+//    public ProdutoApi moveProdutoApi(MovePersistenceAdapter movePersistenceAdapter) {
+//        return Feign.builder()
+//                .encoder(new JacksonEncoder())
+////                .decoder(new JacksonDncoder())
+//                .target(ProdutoApi.class, "http://localhos:8080");
+//    }
 
 
 }

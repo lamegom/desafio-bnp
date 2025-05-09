@@ -3,6 +3,8 @@ package com.desafio.hexagonal.infrastructure.adapters.input.rest.data.response;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Transient;
+
 import com.desafio.hexagonal.infrastructure.adapters.input.rest.data.request.MovePKRequest;
 
 import lombok.AllArgsConstructor;
@@ -27,4 +29,8 @@ public class MoveResponse {
     private String user;
     
     private BigDecimal amount;
+    
+	private String cosif;
+
+	private String produto;
 }
