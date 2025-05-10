@@ -1,7 +1,7 @@
 
 <h2>Movimentos Manuais</h2>
 <div style="min-width: 850px;">
-<div >{{feedback.type}} - {{ feedback.message }}</div>
+<div *ngIf="feedback?.type" class="alert alert-{{feedback.type}}">{{ feedback.message }}</div>
 <form *ngIf="move" #editForm2="ngForm" (ngSubmit)="save()" [formGroup]="editForm">
 
   <div style="display: flex; gap: 10px;">

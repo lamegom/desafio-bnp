@@ -44,13 +44,13 @@ export class FlightEditComponent implements OnInit {
   form!: NgForm;
   validMonths = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   editForm = this.fb.group({
-    year: ['', [Validators.required, yearValidator(1900, 2099)]],
-    month: ['', [Validators.required, monthValidator(this.validMonths),
+    year: new FormControl({value: '', disabled: true}, [Validators.required, yearValidator(1900, 2099)]),
+    month: new FormControl({value: '', disabled: true}, [Validators.required, monthValidator(this.validMonths),
       Validators.pattern(/^([1-9]|1[0-2])$/), // Matches 01 to 12
       Validators.minLength(1),
       Validators.maxLength(2),
       //Validators.pattern(/^\d{2}$/) // Matches exactly two digits
-    ]],
+    ]),
     amount: new FormControl({value: '', disabled: true}, Validators.required),
     description: new FormControl({value: '', disabled: true}, Validators.required),
     produto: new FormControl({value: '', disabled: true}, Validators.required),
@@ -107,6 +107,8 @@ export class FlightEditComponent implements OnInit {
   onReset(form: NgForm) {
     this.move.id.idProduct = '';
     this.move.id.idCosif = '';
+    this.feedback = {};
+    this.disableField()
     form.resetForm(); // Clears values and resets state
   }
 
@@ -120,14 +122,16 @@ export class FlightEditComponent implements OnInit {
         this.move = move;
         this.feedback = {type: 'success', message: 'Save was successful!'};
         this.search({month:'', year: ""} as MoveFilter);
-        this.onSubmit(this.form);
+        setTimeout(() => {
+          this.onSubmit(this.form);
+        }, 1000);
+        
       },
       err => {
-        this.feedback = {type: 'warning', message: 'Error saving : ' }
+        this.feedback = {type: 'warning', message: 'Error saving : ' + err.error.message};
       }
     );
 
-    console.log("feedbak: " + this.feedback);
   }
 
   cancel() {
@@ -146,7 +150,6 @@ export class FlightEditComponent implements OnInit {
           status: string
                   }[];
 
-          console.log("cosif: " + JSON.stringify(this.cosif));
         }
       );
     }

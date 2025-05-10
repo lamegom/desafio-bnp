@@ -61,12 +61,10 @@ export class FlightService {
 
   const headers = new HttpHeaders().set('Accept', 'application/json');
   const params = {} as HttpParams;
-  console.log("url: " + JSON.stringify(url));
   return this.http.get<Move[]>(url, {params, headers});
 }
 
   save(entity: Move): Observable<Move> {
-    console.log("entity: " + JSON.stringify(entity));
     let params = new HttpParams();
     let url = '';
     const headers = new HttpHeaders().set('content-type', 'application/json');
