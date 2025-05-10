@@ -81,7 +81,7 @@ export class FlightEditComponent implements OnInit {
           this.feedback = {};
         },
         err => {
-          this.feedback = {type: 'warning', message: 'Error loading'};
+          this.feedback = {type: 'warning', message: 'Erro ao carregar'};
         }
       );
 
@@ -90,7 +90,7 @@ export class FlightEditComponent implements OnInit {
           this.select = response;
         },
         (error : any) => {
-          console.error('Error fetching data:', error);
+          console.error('Erro carregando data:', error);
         }
       );
 
@@ -114,13 +114,13 @@ export class FlightEditComponent implements OnInit {
 
   save() {
     if(this.editForm.invalid) {
-      this.feedback = {type: 'warning', message: 'Form is invalid!'};
+      this.feedback = {type: 'warning', message: 'Formulário está inválido!'};
       return;
     }
     this.flightService.save(this.move).subscribe(
       move => {
         this.move = move;
-        this.feedback = {type: 'success', message: 'Save was successful!'};
+        this.feedback = {type: 'success', message: 'Salvo com sucesso!'};
         this.search({month:'', year: ""} as MoveFilter);
         setTimeout(() => {
           this.onSubmit(this.form);
@@ -128,7 +128,7 @@ export class FlightEditComponent implements OnInit {
         
       },
       err => {
-        this.feedback = {type: 'warning', message: 'Error saving : ' + err.error.message};
+        this.feedback = {type: 'warning', message: 'Erro ao salvar : ' + err.error.message};
       }
     );
 

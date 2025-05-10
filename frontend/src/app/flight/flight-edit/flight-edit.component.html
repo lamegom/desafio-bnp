@@ -7,27 +7,24 @@
   <div style="display: flex; gap: 10px;">
 
     <mat-form-field style=" width: 50%;">
-    <mat-label>month</mat-label>
+    <mat-label>mês</mat-label>
     <input matInput [(ngModel)]="move.id.month" id="month" name="month"  formControlName="month" maxlength="2">
-     <div *ngIf="editForm.get('month')?.invalid && (editForm.get('month')?.dirty || editForm.get('month')?.touched)">
+    <div *ngIf="editForm.get('month')?.invalid && (editForm.get('month')?.dirty || editForm.get('month')?.touched)">
       <div *ngIf="editForm.get('month')?.errors?.['invalidMonth']">
-        Please select a valid month.
+        Por favor entre com um mês vãlido.
       </div>
-      <div *ngIf="editForm.get('month')?.errors?.['yearOutOfRange']">
-         Year must be between 1900 and 2099.
-      </div>
-      </div>
+    </div>
   </mat-form-field>
 
   <mat-form-field style=" width: 50%;" >
-    <mat-label>year</mat-label>
+    <mat-label>ano</mat-label>
     <input matInput [(ngModel)]="move.id.year" id="year" name="year"  formControlName="year">
       <div *ngIf="editForm.get('year')?.invalid && (editForm.get('year')?.dirty || editForm.get('year')?.touched)">
         <div *ngIf="editForm.get('year')?.errors?.['invalidYear']">
-          Please enter a valid year.
+          Por favor entre um ano vãlido.
         </div>
         <div *ngIf="editForm.get('year')?.errors?.['yearOutOfRange']">
-          Year must be between 1900 and 2099.
+          Ano deve ser entre 1900 e 2099.
         </div>
       </div>
   </mat-form-field>
@@ -36,7 +33,7 @@
 <div style="display: flex; gap: 10px;">
 <div style="width: 50%;">
   <div class="form-group">
-    <mat-label for="produto">product : </mat-label>
+    <mat-label for="produto">produto : </mat-label>
       <select class="mydropdown" id="produto" [(ngModel)]="move.id.idProduct" (change)="onChangeProduct($event)" formControlName="produto" >
         <option value="" disabled selected>Select Product</option>
         <option *ngFor="let produto of select" [value]="produto.produto.id">{{ produto.produto.descricao }}</option>
@@ -55,53 +52,19 @@
   </div>
 </div>
 </div>
-<!-- <div style="display: flex; gap: 10px;">
-  <mat-form-field >
-    <mat-label>idProduct</mat-label>
-    <input matInput [(ngModel)]="move.id.idProduct" id="idProduct" name="idProduct" >
-  </mat-form-field>
-
-  <mat-form-field >
-    <mat-label>IdCosif</mat-label>
-    <input matInput [(ngModel)]="move.id.idCosif" id="idCosif" name="idCosif" >
-  </mat-form-field>
-</div> -->
-
 <mat-form-field style="width: 50%;">
-  <mat-label>amount</mat-label>
+  <mat-label>valor</mat-label>
   <input matInput  formControlName="amount" currencyMask  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" [(ngModel)]="move.amount" [disabled]="active" id="amount" name="amount">
 </mat-form-field>
 
   <mat-form-field style="width: 50%;">
-    <mat-label>description</mat-label>
+    <mat-label>descrição</mat-label>
     <textarea matInput  formControlName="description" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
     cdkAutosizeMinRows="1"
     cdkAutosizeMaxRows="5"
     [disabled]="!active"
     [(ngModel)]="move.description" id="description" name="description"></textarea>
-    <!-- <input matInput [(ngModel)]="move.description" id="description" name="description"> -->
   </mat-form-field>
-  <!-- <div style="display: flex; gap: 10px;">
-
-  <mat-form-field style=" width: 50%;">
-    <mat-label>user</mat-label>
-    <input matInput [(ngModel)]="move.user" id="user" name="user">
-  </mat-form-field>
-
-  <mat-form-field style=" width: 50%;">
-    <mat-label>Date</mat-label>
-    <input matInput [matDatepicker]="picker" [(ngModel)]="move.dtMovement" id="dtMovement" name="dtMovement">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-</div> -->
-<!--  <div class="button-row" role="group" *ngIf="active">
-    <button type="submit" mat-raised-button color="primary" [disabled]="!editForm.valid">Save</button>
-    <button type="button" mat-button color="accent" (click)="disableField()">Cancel</button>
-    <p></p>
-    <p></p>
-  </div> -->
-
 </form>
 
 </div>
