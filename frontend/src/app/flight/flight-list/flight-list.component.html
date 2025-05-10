@@ -34,7 +34,7 @@
     </ng-container>
     <ng-container matColumnDef="valor">
       <mat-header-cell *matHeaderCellDef style="background: lightgray;  font-weight: bolder;"> valor </mat-header-cell>
-      <mat-cell *matCellDef="let item"> {{item.amount}} </mat-cell>
+      <mat-cell *matCellDef="let item"> {{item.amount | currency  : 'BRL'}} </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
