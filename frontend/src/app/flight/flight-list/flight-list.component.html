@@ -1,12 +1,12 @@
 
   <div *ngIf="flightList.length > 0;then content; else other_content"></div>
 
-  <ng-template #other_content>
-    <span class="no-records" style="align-items: center;">Manal moviment has not added records yet.</span>
+  <ng-template #other_content >
+    <div  style="text-align: center;font-weight: bolder;">
+      <span class="no-records">Movimentação Manual ainda não adicionou nenhum registro.</span>
+    </div>
 </ng-template>
 <ng-template #content>
-
-  <div *ngIf="feedback.length" class="alert alert-{{feedback.type}}">{{ feedback.message }}</div>
   <table mat-table #table [dataSource]="flightList">
     <ng-container matColumnDef="mês">
       <mat-header-cell *matHeaderCellDef style="background: lightgray;  font-weight: bolder;"> mês </mat-header-cell>
