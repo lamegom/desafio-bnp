@@ -110,6 +110,8 @@ export class FlightEditComponent implements OnInit {
     this.feedback = {};
     this.disableField()
     form.resetForm(); // Clears values and resets state
+    this.search({month:'', year: ""} as MoveFilter);
+
   }
 
   save() {
@@ -121,7 +123,6 @@ export class FlightEditComponent implements OnInit {
       move => {
         this.move = move;
         this.feedback = {type: 'success', message: 'Salvo com sucesso!'};
-        this.search({month:'', year: ""} as MoveFilter);
         setTimeout(() => {
           this.onSubmit(this.form);
         }, 1000);
