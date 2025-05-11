@@ -6,7 +6,7 @@
 
   <div style="display: flex; gap: 10px;">
 
-    <mat-form-field style=" width: 50%;">
+    <mat-form-field style=" width: 50%;"  appearance="outline">
     <mat-label>mês</mat-label>
     <input matInput [(ngModel)]="move.id.month" id="month" name="month"  formControlName="month" maxlength="2">
     <div *ngIf="editForm.get('month')?.invalid && (editForm.get('month')?.dirty || editForm.get('month')?.touched)">
@@ -16,7 +16,7 @@
     </div>
   </mat-form-field>
 
-  <mat-form-field style=" width: 50%;" >
+  <mat-form-field style=" width: 50%;" appearance="outline" >
     <mat-label>ano</mat-label>
     <input matInput [(ngModel)]="move.id.year" id="year" name="year"  formControlName="year">
       <div *ngIf="editForm.get('year')?.invalid && (editForm.get('year')?.dirty || editForm.get('year')?.touched)">
@@ -31,33 +31,32 @@
 </div>
 
 <div style="display: flex; gap: 10px;">
-<div style="width: 50%;">
-  <div class="form-group">
-    <mat-label for="produto">produto : </mat-label>
-      <select class="mydropdown" id="produto" [(ngModel)]="move.id.idProduct" (change)="onChangeProduct($event)" formControlName="produto" >
-        <option value="" disabled selected>Select Product</option>
-        <option *ngFor="let produto of select" [value]="produto.produto.id">{{ produto.produto.descricao }}</option>
-      </select>
-  </div>
-</div>
+<mat-form-field style="width: 50%;" appearance="outline">
+  <mat-label>produto</mat-label>
+  <mat-select (selectionChange)="onChangeProduct($event.value)" [(ngModel)]="move.id.idProduct" id="produto"formControlName="produto">
+    <mat-option>-- Selecione --</mat-option>
+    @for (produto of select; track produto) {
+      <mat-option [value]="produto.produto.id">{{produto.produto.descricao}}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
 
-<div style="width: 50%;">
-  
-  <div class="form-group">
-    <mat-label for="cosif">cosif : </mat-label>
-    <select class="mydropdown" id="cosif" [(ngModel)]="move.id.idCosif" formControlName="cosif" >
-      <option value="" disabled selected>Select Cosif</option>
-      <option *ngFor="let cosif of cosif" [value]="cosif.pk.idCosif">{{ cosif.pk.idCosif}} - {{cosif.classifier }}</option>
-    </select>
-  </div>
+  <mat-form-field style="width: 50%;" appearance="outline">
+  <mat-label>cosif</mat-label>
+  <mat-select [(ngModel)]="move.id.idCosif" id="cosif" formControlName="cosif">
+    <mat-option>-- Selecione --</mat-option>
+    @for (cosif of cosif; track cosif) {
+      <mat-option [value]="cosif.pk.idCosif">{{ cosif.pk.idCosif}} - {{cosif.classifier }}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
 </div>
-</div>
-<mat-form-field style="width: 50%;">
+<mat-form-field style="width: 50%;" appearance="outline">
   <mat-label>valor</mat-label>
   <input matInput  formControlName="amount" currencyMask  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" [(ngModel)]="move.amount" [disabled]="active" id="amount" name="amount">
 </mat-form-field>
 
-  <mat-form-field style="width: 50%;">
+  <mat-form-field style="width: 50%;" appearance="outline">
     <mat-label>descrição</mat-label>
     <textarea matInput  formControlName="description" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
     cdkAutosizeMinRows="1"

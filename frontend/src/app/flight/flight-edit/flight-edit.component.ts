@@ -141,8 +141,8 @@ export class FlightEditComponent implements OnInit {
   }
 
 
-  onChangeProduct(event: Event) {
-    const productId = (event.target as HTMLInputElement).value;
+  onChangeProduct(value: any) {
+    const productId = value;
     if (productId) {
       this.productService.getCosifs(productId).subscribe(
         (data: any) => {

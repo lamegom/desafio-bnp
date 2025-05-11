@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -15,6 +15,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ProductService } from '../product/product.service';
 import { CurrencyMaskModule } from "ng2-currency-mask";
+import { MatSelectModule } from '@angular/material/select';
+
 
 @NgModule({
   imports: [
@@ -29,7 +31,8 @@ import { CurrencyMaskModule } from "ng2-currency-mask";
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
-    CurrencyMaskModule
+    CurrencyMaskModule,
+    MatSelectModule
   ],
   declarations: [
     FlightListComponent,
@@ -38,6 +41,7 @@ import { CurrencyMaskModule } from "ng2-currency-mask";
   providers: [FlightService,
     ProductService
   ],
-  exports: []
+  exports: [],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class FlightModule { }
